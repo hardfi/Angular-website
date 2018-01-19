@@ -10,6 +10,11 @@ import { RecipeDetailsComponent } from './recipes/recipe-details/recipe-details.
 import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-item.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
+import { FormComponent } from './form/form.component';
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { Routes } from '@angular/router';
 
 
 @NgModule({
@@ -21,10 +26,21 @@ import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-ed
 		RecipeDetailsComponent,
 		RecipeItemComponent,
 		ShoppingListComponent,
-		ShoppingEditComponent
+		ShoppingEditComponent,
+		FormComponent
 	],
 	imports: [
-		BrowserModule
+		BrowserModule,
+		RouterModule.forRoot([
+			{ path: '', redirectTo: 'form', pathMatch: 'full' },
+			{ path: 'form', component: FormComponent},
+			{ path: 'cook', component: HeaderComponent },
+		]),
+		ReactiveFormsModule
+		// NgbModule.forRoot(),
+	],
+	exports: [
+		RouterModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

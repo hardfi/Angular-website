@@ -1,0 +1,13 @@
+span {
+	color: crimson;
+	float: right;
+	margin: 0;
+}
+
+input.ng-touched.ng-invalid {
+	border: 1px solid crimson;
+}
+
+label, span {
+	display: inline-block;
+}
