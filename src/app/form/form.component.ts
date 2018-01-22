@@ -11,6 +11,7 @@ export class FormComponent implements OnInit {
 	genders = ['right', 'left', 'middle'];
 	signupForm: FormGroup;
 	forbiddenNames = ['admin', 'bullshit', 'fuck'];
+	paymentMethod: string = 'bank';
 
 	constructor(private fb: FormBuilder) {  }
 
@@ -25,8 +26,12 @@ export class FormComponent implements OnInit {
 			extendedData: this.fb.group({
 				address: [],
 				random: new FormArray([])
+			}),
+			paymentDetails: this.fb.group({
+				bank: this.fb.group(this.bankValidation()),
+				card: this.fb.group(this.cardValidation())
 			})
-		})
+		});
 
 		this.signupForm.get('basicData.gender').valueChanges.subscribe(
 			(gender: string) => {
@@ -43,6 +48,58 @@ export class FormComponent implements OnInit {
 	onSubmit() {
 		this.signupForm.reset();
 		console.log(this.signupForm);
+	}
+
+	setPaymentMethodType() {
+		this.paymentMethod === 'bank' ? this.paymentMethod = 'card' : this.paymentMethod = 'bank';
+
+		const ctrl = (<any>this.signupForm).controls.paymentDetails;
+		const bankCtrl = ctrl.bank;
+		const cardCtrl = ctrl.card;
+		console.log(ctrl);
+
+		if (this.paymentMethod === 'bank') {
+			// apply validators to each bank fields, retrieve validators from bank model
+			Object.keys(bankCtrl.controls).forEach(key => {
+				bankCtrl.controls[key].setValidators(this.bankValidation()[key][1]);
+				bankCtrl.controls[key].updateValueAndValidity();
+			});
+
+			// remove all validators from card fields
+			Object.keys(cardCtrl.controls).forEach(key => {
+				cardCtrl.controls[key].setValidators(null);
+				cardCtrl.controls[key].updateValueAndValidity();
+			});
+		} else {
+			Object.keys(bankCtrl.controls).forEach(key => {
+				bankCtrl.controls[key].setValidators(null);
+				bankCtrl.controls[key].updateValueAndValidity();
+			});
+
+			// apply validators to each card fields, retrieve validators from card model
+			Object.keys(cardCtrl.controls).forEach(key => {
+				cardCtrl.controls[key].setValidators(this.cardValidation()[key][1]);
+				cardCtrl.controls[key].updateValueAndValidity();
+			});
+		}
+	}
+
+	bankValidation() {
+		const model = {
+			accountNo: ['', Validators.required],
+			accountHolder: ['', Validators.required],
+			routingNo: ['', Validators.required]
+		};
+		return model;
+	}
+
+	cardValidation() {
+		const model = {
+			cardNo: ['', Validators.required],
+			cardHolder: ['', Validators.required],
+			expiry: ['', Validators.required]
+		};
+		return model;
 	}
 
 	onAddData() {
