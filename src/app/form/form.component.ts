@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 
 
 @Component({
@@ -10,18 +10,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class FormComponent implements OnInit {
 	genders = ['right', 'left', 'middle'];
 	signupForm: FormGroup;
+	forbiddenNames = ['admin', 'bullshit', 'fuck'];
 
 	constructor(private fb: FormBuilder) {  }
 
 	ngOnInit() {
+		let self = this;
 		this.signupForm = this.fb.group ({
 			basicData: this.fb.group({
-				username: ['', [Validators.required, Validators.minLength(3)]],
+				username: ['', [Validators.required, Validators.minLength(3), this.forbidden.bind(this)]],
 				email: ['', [Validators.required, Validators.email]],
 				gender: ['', Validators.required]
 			}),
 			extendedData: this.fb.group({
-				address: []
+				address: [],
+				random: new FormArray([])
 			})
 		})
 
@@ -38,6 +41,19 @@ export class FormComponent implements OnInit {
 	}
 
 	onSubmit() {
+		this.signupForm.reset();
 		console.log(this.signupForm);
+	}
+
+	onAddData() {
+		const control = new FormControl(null, Validators.required);
+		(<FormArray>this.signupForm.get('extendedData.random')).push(control);
+	}
+
+	forbidden(control: FormControl): {[s: string]: boolean} {
+		if (this.forbiddenNames.indexOf(control.value) !== -1) {
+			return {nameForbidden: true};
+		}
+		return null;
 	}
 }

@@ -11,3 +11,12 @@ input.ng-touched.ng-invalid {
 label, span {
 	display: inline-block;
 }
+
+.btn {
+	margin: 10px auto;
+}
+
+h4 {
+	background-color: beige;
+	padding: 10px;
+}

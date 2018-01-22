@@ -1,13 +1,17 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+			<h4>Some test form:</h4>
 			<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
 				<div formGroupName="basicData">
 					<div class="form-group">
-						<label for="username">Username</label>
+						<label for="username">Username (forbidden names: admin)</label>
 						<span
 							*ngIf="!signupForm.get('basicData.username').valid && signupForm.get('basicData.username').touched"
-							class="help-block">Enter a valid name!</span>
+							class="help-block">
+							<span *ngIf="signupForm.get('basicData.username').errors['nameForbidden']">This name is forbidden!</span>
+							<span *ngIf="signupForm.get('basicData.username').errors['required']">This field is required!</span>
+						</span>
 						<input
 							type="text"
 							id="username"
@@ -49,6 +53,18 @@
 							id="address"
 							class="form-control"
 							formControlName="address">
+					</div>
+					<div formArrayName="random">
+						<h4>Add something:</h4>
+						<div type="button" class="btn btn-primary" (click)="onAddData()">Add random data</div>
+						<div class="form-group" *ngFor="let randomControl of signupForm.get('extendedData.random').controls; let i = index">
+							<label for="address">Random data</label>
+							<span
+								*ngIf="!signupForm.get('extendedData.random').valid && signupForm.get('extendedData.random').touched"
+								class="help-block">Enter something!</span>
+							<input type="text" class="form-control" [formControlName]="i">
+
+						</div>
 					</div>
 				</div>
 
