@@ -16,7 +16,6 @@ export class FormComponent implements OnInit {
 	constructor(private fb: FormBuilder) {  }
 
 	ngOnInit() {
-		let self = this;
 		this.signupForm = this.fb.group ({
 			basicData: this.fb.group({
 				username: ['', [Validators.required, Validators.minLength(3), this.forbidden.bind(this)]],
@@ -45,18 +44,12 @@ export class FormComponent implements OnInit {
 		)
 	}
 
-	onSubmit() {
-		this.signupForm.reset();
-		console.log(this.signupForm);
-	}
-
 	setPaymentMethodType() {
 		this.paymentMethod === 'bank' ? this.paymentMethod = 'card' : this.paymentMethod = 'bank';
 
 		const ctrl = (<any>this.signupForm).controls.paymentDetails;
-		const bankCtrl = ctrl.bank;
-		const cardCtrl = ctrl.card;
-		console.log(ctrl);
+		const bankCtrl = ctrl.controls.bank;
+		const cardCtrl = ctrl.controls.card;
 
 		if (this.paymentMethod === 'bank') {
 			// apply validators to each bank fields, retrieve validators from bank model
@@ -94,10 +87,14 @@ export class FormComponent implements OnInit {
 	}
 
 	cardValidation() {
+		const expiryRegex = `^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$`;
+		// const cardNoRegex = `^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$`;
+
 		const model = {
+			// cardNo: ['', [Validators.required, Validators.pattern(cardNoRegex)]],
 			cardNo: ['', Validators.required],
 			cardHolder: ['', Validators.required],
-			expiry: ['', Validators.required]
+			expiry: ['', [Validators.required, Validators.pattern(expiryRegex)]]
 		};
 		return model;
 	}
@@ -112,5 +109,10 @@ export class FormComponent implements OnInit {
 			return {nameForbidden: true};
 		}
 		return null;
+	}
+
+	onSubmit() {
+		this.signupForm.reset();
+		console.log(this.signupForm);
 	}
 }

@@ -78,84 +78,90 @@
 
 				<div formGroupName="paymentDetails">
 					<div *ngIf="paymentMethod == 'bank'">
-						<div class="panel-body">
+						<div class="card card-body">
 
 							<!--Bank account no-->
-							<div formGroupName="bank">
-								<label>Account no.</label>
+							<div formGroupName="bank" class="form-group">
+								<label for="accountNo">Account no.</label>
+								<span
+									*ngIf="!signupForm.get('paymentDetails.bank.accountNo').valid && signupForm.get('paymentDetails.bank.accountNo').touched"
+									class="help-block">Enter a valid account number!</span>
 								<input
 									type="text"
+									id="accountNo"
 									formControlName="accountNo"
 									class="form-control">
-								<!--<small *ngIf="!myForm.controls.paymentMethod.controls.bank.controls.accountNo.valid">-->
-								<!--Required.-->
-								<!--</small>-->
 							</div>
 
 							<!--Bank routing no-->
-							<div formGroupName="bank">
-								<label>Routing no.</label>
+							<div formGroupName="bank" class="form-group">
+								<label for="routingNo">Routing no.</label>
+								<span
+									*ngIf="!signupForm.get('paymentDetails.bank.routingNo').valid && signupForm.get('paymentDetails.bank.routingNo').touched"
+									class="help-block">Enter a valid IBAN!</span>
 								<input
 									type="text"
+									id="routingNo"
 									formControlName="routingNo"
 									class="form-control">
-								<!--<small *ngIf="!myForm.controls.paymentMethod.controls.bank.controls.routingNo.valid">-->
-								<!--Required.-->
-								<!--</small>-->
 							</div>
 
 							<!--Bank account holder-->
-							<div formGroupName="bank">
-								<label>Name</label>
+							<div formGroupName="bank" class="form-group">
+								<label for="accountHolder">Name</label>
+								<span
+									*ngIf="!signupForm.get('paymentDetails.bank.accountHolder').valid && signupForm.get('paymentDetails.bank.accountHolder').touched"
+									class="help-block">Enter cardholder's name!</span>
 								<input
 									type="text"
+									id="accountHolder"
 									formControlName="accountHolder"
 									class="form-control">
-								<!--<small *ngIf="!myForm.controls.paymentMethod.controls.bank.controls.accountHolder.valid">-->
-								<!--Required.-->
-								<!--</small>-->
 							</div>
 						</div>
 					</div>
 
 					<!--payment method: CARD-->
 					<div *ngIf="paymentMethod == 'card'">
-						<div class="panel-body">
+						<div class="card card-body">
 
 							<!--Card no-->
-							<div formGroupName="card">
-								<label>Card no.</label>
+							<div formGroupName="card" class="form-group">
+								<label for="cardNo">Card no.</label>
+								<span
+									*ngIf="!signupForm.get('paymentDetails.card.cardNo').valid && signupForm.get('paymentDetails.card.cardNo').touched"
+									class="help-block">Enter valid card number!</span>
 								<input
 									type="text"
+									id="cardNo"
 									formControlName="cardNo"
 									class="form-control">
-								<!--<small *ngIf="!myForm.controls.paymentMethod.controls.card.controls.cardNo.valid">-->
-								<!--Required (Must be valid card number).-->
-								<!--</small>-->
 							</div>
 
 							<!--Card expiry-->
-							<div formGroupName="card">
-								<label>Expiry</label>
+							<div formGroupName="card" class="form-group">
+								<label for="expiry">Expiry</label>
+								<span
+									*ngIf="!signupForm.get('paymentDetails.card.expiry').valid && signupForm.get('paymentDetails.card.expiry').touched"
+									class="help-block">Valid date format: MM/YY</span>
 								<input
 									type="text"
+									id="expiry"
 									formControlName="expiry"
 									class="form-control">
-								<!--<small *ngIf="!myForm.controls.paymentMethod.controls.card.controls.expiry.valid" class="text-danger">-->
-								<!--Required (Must be in format MM/YY).-->
-								<!--</small>-->
 							</div>
 
 							<!--Card holder-->
-							<div formGroupName="card">
-								<label>Name</label>
+							<div formGroupName="card" class="form-group">
+								<label for="cardHolder">Name</label>
+								<span
+									*ngIf="!signupForm.get('paymentDetails.card.cardHolder').valid && signupForm.get('paymentDetails.card.cardHolder').touched"
+									class="help-block">Cardholder's name required!</span>
 								<input
 									type="text"
+									id="cardHolder"
 									formControlName="cardHolder"
 									class="form-control">
-								<!--<small *ngIf="!myForm.controls.paymentMethod.controls.card.controls.cardHolder.valid">-->
-								<!--Required.-->
-								<!--</small>-->
 							</div>
 
 						</div>

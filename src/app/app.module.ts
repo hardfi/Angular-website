@@ -13,6 +13,8 @@ import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-ed
 import { FormComponent } from './form/form.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MenubarModule} from 'primeng/menubar';
+
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { Routes } from '@angular/router';
 
@@ -36,11 +38,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 			{ path: 'form', component: FormComponent},
 			{ path: 'cook', component: HeaderComponent },
 		]),
-		ReactiveFormsModule
+		ReactiveFormsModule,
 		// NgbModule.forRoot(),
+		MenubarModule
 	],
 	exports: [
-		RouterModule
+		RouterModule,
+		MenubarModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]
