@@ -1,16 +1,16 @@
-<div class="container">
+<div class="container ui-card-body">
 	<div class="row">
 		<div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
 			<h4>Some test form:</h4>
-			<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+			<form [formGroup]="form" (ngSubmit)="onSubmit()">
 				<div formGroupName="basicData">
 					<div class="form-group">
 						<label for="username">Username (forbidden names: admin)</label>
 						<span
-							*ngIf="!signupForm.get('basicData.username').valid && signupForm.get('basicData.username').touched"
+							*ngIf="!form.get('basicData.username').valid && form.get('basicData.username').touched"
 							class="help-block">
-							<span *ngIf="signupForm.get('basicData.username').errors['nameForbidden']">This name is forbidden!</span>
-							<span *ngIf="signupForm.get('basicData.username').errors['required']">This field is required!</span>
+							<span *ngIf="form.get('basicData.username').errors['nameForbidden']">This name is forbidden!</span>
+							<span *ngIf="form.get('basicData.username').errors['required']">This field is required!</span>
 						</span>
 						<input
 							type="text"
@@ -21,7 +21,7 @@
 					<div class="form-group">
 						<label for="email">Email</label>
 						<span
-							*ngIf="!signupForm.get('basicData.email').valid && signupForm.get('basicData.email').touched"
+							*ngIf="!form.get('basicData.email').valid && form.get('basicData.email').touched"
 							class="help-block">Enter a valid email!</span>
 						<input
 							type="email"
@@ -41,12 +41,12 @@
 				</div>
 
 				<div
-					*ngIf="signupForm.get('basicData.gender').value == 'middle'"
+					*ngIf="form.get('basicData.gender').value == 'middle'"
 					formGroupName="extendedData">
 					<div class="form-group">
 						<label for="address">Address</label>
 						<span
-							*ngIf="!signupForm.get('extendedData.address').valid && signupForm.get('extendedData.address').touched"
+							*ngIf="!form.get('extendedData.address').valid && form.get('extendedData.address').touched"
 							class="help-block">Enter a valid address!</span>
 						<input
 							type="text"
@@ -57,10 +57,10 @@
 					<div formArrayName="random">
 						<h4>Add something:</h4>
 						<div type="button" class="btn btn-primary" (click)="onAddData()">Add random data</div>
-						<div class="form-group" *ngFor="let randomControl of signupForm.get('extendedData.random').controls; let i = index">
+						<div class="form-group" *ngFor="let randomControl of form.get('extendedData.random').controls; let i = index">
 							<label for="address">Random data</label>
 							<span
-								*ngIf="!signupForm.get('extendedData.random').valid && signupForm.get('extendedData.random').touched"
+								*ngIf="!form.get('extendedData.random').valid && form.get('extendedData.random').touched"
 								class="help-block">Enter something!</span>
 							<input type="text" class="form-control" [formControlName]="i">
 
@@ -84,7 +84,7 @@
 							<div formGroupName="bank" class="form-group">
 								<label for="accountNo">Account no.</label>
 								<span
-									*ngIf="!signupForm.get('paymentDetails.bank.accountNo').valid && signupForm.get('paymentDetails.bank.accountNo').touched"
+									*ngIf="!form.get('paymentDetails.bank.accountNo').valid && form.get('paymentDetails.bank.accountNo').touched"
 									class="help-block">Enter a valid account number!</span>
 								<input
 									type="text"
@@ -97,7 +97,7 @@
 							<div formGroupName="bank" class="form-group">
 								<label for="routingNo">Routing no.</label>
 								<span
-									*ngIf="!signupForm.get('paymentDetails.bank.routingNo').valid && signupForm.get('paymentDetails.bank.routingNo').touched"
+									*ngIf="!form.get('paymentDetails.bank.routingNo').valid && form.get('paymentDetails.bank.routingNo').touched"
 									class="help-block">Enter a valid IBAN!</span>
 								<input
 									type="text"
@@ -110,7 +110,7 @@
 							<div formGroupName="bank" class="form-group">
 								<label for="accountHolder">Name</label>
 								<span
-									*ngIf="!signupForm.get('paymentDetails.bank.accountHolder').valid && signupForm.get('paymentDetails.bank.accountHolder').touched"
+									*ngIf="!form.get('paymentDetails.bank.accountHolder').valid && form.get('paymentDetails.bank.accountHolder').touched"
 									class="help-block">Enter cardholder's name!</span>
 								<input
 									type="text"
@@ -129,7 +129,7 @@
 							<div formGroupName="card" class="form-group">
 								<label for="cardNo">Card no.</label>
 								<span
-									*ngIf="!signupForm.get('paymentDetails.card.cardNo').valid && signupForm.get('paymentDetails.card.cardNo').touched"
+									*ngIf="!form.get('paymentDetails.card.cardNo').valid && form.get('paymentDetails.card.cardNo').touched"
 									class="help-block">Enter valid card number!</span>
 								<input
 									type="text"
@@ -142,7 +142,7 @@
 							<div formGroupName="card" class="form-group">
 								<label for="expiry">Expiry</label>
 								<span
-									*ngIf="!signupForm.get('paymentDetails.card.expiry').valid && signupForm.get('paymentDetails.card.expiry').touched"
+									*ngIf="!form.get('paymentDetails.card.expiry').valid && form.get('paymentDetails.card.expiry').touched"
 									class="help-block">Valid date format: MM/YY</span>
 								<input
 									type="text"
@@ -155,7 +155,7 @@
 							<div formGroupName="card" class="form-group">
 								<label for="cardHolder">Name</label>
 								<span
-									*ngIf="!signupForm.get('paymentDetails.card.cardHolder').valid && signupForm.get('paymentDetails.card.cardHolder').touched"
+									*ngIf="!form.get('paymentDetails.card.cardHolder').valid && form.get('paymentDetails.card.cardHolder').touched || submitted === true && !form.get('paymentDetails.card.cardHolder').valid"
 									class="help-block">Cardholder's name required!</span>
 								<input
 									type="text"
@@ -168,8 +168,7 @@
 					</div>
 				</div>
 
-
-				<button [disabled]="!signupForm.valid" class="btn btn-primary" type="submit">Submit</button>
+				<button class="btn btn-primary" (click)="onSubmit()">Submit</button>
 
 			</form>
 		</div>

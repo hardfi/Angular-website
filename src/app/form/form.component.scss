@@ -17,12 +17,14 @@ label, span {
 }
 
 h4 {
-	background-color: beige;
 	padding: 10px;
+  border-radius: 3px;
+  background-color: lightgreen;
 }
 
 .card-body {
-	/*background-color: cornsilk;*/
-	padding: 20px;
-	/*border-radius: 25px;*/
+	background-color: aliceblue;
+  padding: 20px;
+	border-radius: 4px;
+  border: 2px solid lightgreen;
 }
